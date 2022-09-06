@@ -3,28 +3,33 @@ from random import randint, choice
 
 # Additional functions
 def update_ball_position():
-    if ball.direction_x == 'left':
-        ball.x-=ball.speed
-    elif ball.direction_x == 'right':
-        ball.x+=ball.speed
-    if ball.direction_y == 'up':
-        ball.y+=ball.speed
-    elif ball.direction_y == 'down':
-        ball.y-=ball.speed
-    if ball.x < 5:
-        ball.direction_x = 'right'
-    elif ball.x > WIDTH-5:
-        ball.direction_x = 'left'
-    if ball.y < 5:
-        ball.winner = 'Gamer B'
-    elif ball.y > HEIGHT-5:
-        ball.winner = 'Gamer A'
+    ball.x += ball.speed if ball.direction_x == 'right' else -ball.speed
+    ball.y += ball.speed if ball.direction_y == 'up' else -ball.speed
+    if ball.x < 5: ball.direction_x = 'right'
+    elif ball.x > WIDTH-5: ball.direction_x = 'left'
+    if ball.y < 5: ball.winner = 'Gamer B'
+    elif ball.y > HEIGHT-5: ball.winner = 'Gamer A'
+
 # Game start
 WIDTH= 1280
 HEIGHT= 853
 TITLE= 'PONG IS COOL'
 
 # Objects definitions
+class Palette:
+    def __init__(self, palette, position):
+        '''Palette features'''
+        self.palette=palette
+        self.palette.x=position[0]
+        self.palette.y=position[1]
+        self.palette.speed=5
+    def drawing(self):
+        '''Object method'''
+        self.palette.draw()
+    def move(self, direction):
+        '''x-axis position update'''
+        self.palette.x += self.palette.speed if direction == 'right' else -self.palette.speed
+
 palette_a = Actor('palette.png')
 palette_a.y = 10
 palette_a.x = randint(70, 1210)
